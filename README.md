@@ -1,3 +1,4 @@
+![Banner](./pix/banner.png)
 # Nextflow Fastq Quality Control
 <i> Fastq metrics and trimming for paired-end reads</i>
 
