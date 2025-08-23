@@ -9,8 +9,10 @@
 
 ## Running the pipeline:
 - Configure your input and output folders as parameters (ensure the output folder exists before running)
-- The script can be run with <b>docker</b> by setting nextflow.config file's docker setting to "true". That will execute the pipeline in container cbreuer/fastqc_quality_control:latest which has the required programs.
-- Running outside of docker: (required)
+- The script can be run with <b>docker</b> by setting nextflow.config file's docker setting to "true". That will execute the pipeline in container cbreuer/fastqc_preprocess:latest which has the required programs and is modeled after the nf-core/rnaseq pipeline's fastq processing steps.
+- Running locally without Docker - required command line tools:
+	- python 3
+	- Java 17
 	- seqkit
 	- fastp
 	- FastQC
