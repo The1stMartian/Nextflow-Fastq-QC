@@ -3,19 +3,17 @@
 <i> Fastq metrics and trimming for paired-end reads</i>
 
 ## Available Pipelines: (2)
-<i>Separate pipelines are available for different circumstances:</i>
-1)  <span style="color:skyblue;">General purpose</span><br> 
+<i>Separate pipelines are available for different circumstances:</i><br>
+#### <span style="color:skyblue;">General purpose: </span> fastqQC<br> 
 - Trims on quality and adaptors 
 - Collects pre/post cleaning metrics
-- Pipeline: <b>fastqQC</b><br>
 
-2) <span style="color:skyblue;">RNA-Seq reads w/ UMI barcodes</span>
+#### <span style="color:skyblue;">RNA-Seq reads w/ UMI barcodes: </span>fastqQC_PE_UMI
 - Trims on quality and adaptors
 - Determines library strandedness
 - Moves UMIs to read headers
 - Removes reads that map to rRNA
 - Collects pre and post-cleaning QC metrics
-- Pipeline: <b>fastqQC_PE_UMI</b>
 
 ## Running the pipelines:
 - Download the scripts and nextflow.config files
