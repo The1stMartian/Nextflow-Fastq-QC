@@ -72,3 +72,9 @@ Process "FASTQC_CLEAN_PE"
 
 # Notes:
 - My dockerfile for container cbreuer/fastq_quality_control is included if needed.
+
+# Background work:
+Create a sortmerna index:
+- Open rrna-db-defaults.txt and [download](https://www.arb-silva.de/download/arb-files/) the silva database containing the rRNA sequences appropriate for your library. Keeping the number of sequences to a minimum is advised because the processing time of sortmerna can be high. Combine the desired sequences into a single .fa (your 'ribo_fasta.fa' sequence) file and run a one sortmerna example analysis with dummy fastq files. This will cause sortmerna to create the index in the work folder/idx. It's the /idx folder you want to keep and reuse. Point the nextflow paramter.
+- Save the .fa file with the rRNA sequences used to make the sortmerna library. Point the nextflow paramter at the file.<br><br>
+Create a salmon index (discussed [here](https://combine-lab.github.io/salmon/getting_started/#indexing-txome)) with "salmon index -t genome.fa.gz -i salmon_gnm_name". Point the nextflow parameter to the index.

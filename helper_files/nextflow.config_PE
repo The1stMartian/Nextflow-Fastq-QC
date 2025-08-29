@@ -1,0 +1,6 @@
+docker.enabled = true
+aws.batch.cliPath = '/usr/local/bin/aws'
+
+process {
+  container = 'cbreuer/fastq_preprocess:latest'
+  }

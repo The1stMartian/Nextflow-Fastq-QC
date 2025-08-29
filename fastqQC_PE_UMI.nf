@@ -3,10 +3,13 @@
 --------------------------- */
 
 // File locations
-params.input      = "${baseDir}/fastq_UMI_chrM/*_{R1,R2}.fastq.gz"  	// paired-end pattern
-params.salmonIdx = "${baseDir}/genomes/salmon_idx_chrM" //pre-built salmon index
-params.outdir = "${baseDir}/out" // main output directory
+params.input      = "${baseDir}/fastq/with/UMIs/*_{R1,R2}.fastq.gz"  	// paired-end pattern
+params.salmonIdx = "${baseDir}/path/to/salmonIdx" 						//pre-built salmon index
+params.outdir = "${baseDir}/out" 										// main output directory
+params.smrIndex = '/path/to/idx'
+params.riboFasta = '/path/to/rrna_sequences.fa'
 
+// Fastq trimming
 params.paired_end = true                       		// set true for PE
 params.threads    = 8
 params.min_len    = 30
@@ -15,12 +18,11 @@ params.max_ns     = 5
 params.trim_poly  = true     						// poly-G/X trimming for NovaSeq/NextSeq
 params.correction = true     						// PE overlap correction
 
+// UMI parameters
+params.umi_length = 8								// UMI length. Default is 8
+params.umi_separator = ':'							// UMI separator. Default is ":"
+params.subsampler = 'seqtk'							// Default is 'seqtk'
 
-params.umi_length = 8
-params.umi_separator = ':'
-params.subsampler = 'seqtk'
-params.smrIndex = '/home/chris/smrIdxEuk/idx'
-params.riboFasta = '/home/chris/smrIdxEuk/idx/rrna_human_all.fa'
 
 // Index for sortmerna *params.smrIndex must contain folder "idx" with the index files
 IDX_CACHE_CH = Channel.value( file(params.smrIndex, type: 'dir') )
@@ -44,9 +46,6 @@ Channel
     .fromFilePairs( params.input, size: 2, flat: true )
     .ifEmpty { error "No paired FASTQs found at: ${params.input}" }
     .set { READS_PE }
-
-
-
 
 /* 1) Baseline fastq metrics */
 process INTEGRITY_STATS {
@@ -94,7 +93,7 @@ process SUBSAMPLE_AND_INFER_STRAND {
   path "${sample}.salmon_infer.tsv",      emit: SUMMARY, optional: true
 
   /*
-    Tunables:
+    Unnecessarily complicated tunable parameters:
       params.subsampler   : 'seqtk' | 'reformat'  (default 'seqtk')
       params.sample_prob  : e.g., 0.10  (ignored if sample_n is set)
       params.sample_n     : e.g., 100000
@@ -311,16 +310,16 @@ process SORTMERNA_FILTER_PE {
 
   script:
   """
-set -euo pipefail
+  set -euo pipefail
 
-# prep workdir + optional cached index
-mkdir -p ./work/idx
-if [ -d ./idx ] && find ./idx -mindepth 1 -maxdepth 1 -print -quit >/dev/null; then
-  cp -a ./idx/. ./work/idx/
-fi
+  # prep workdir + optional cached index
+  mkdir -p ./work/idx
+  if [ -d ./idx ] && find ./idx -mindepth 1 -maxdepth 1 -print -quit >/dev/null; then
+    cp -a ./idx/. ./work/idx/
+  fi
 
-# run sortmerna
-sortmerna \
+  # run sortmerna
+  sortmerna \
   --ref "${rrna_fasta}" \
   --reads "${read1}" --reads "${read2}" \
   --workdir ./work \
