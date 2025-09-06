@@ -4,13 +4,13 @@
 
 ## Available Pipelines: (2)
 
-#### 1) FastqQC-PE
+#### 1) FastqQC (PE)
 - Trims on quality and adaptors
 - Determines library strandedness
 - Removes reads that map to rRNA
 - Collects pre/post-cleaning QC metrics
 
-#### 2) FastqQC-PE-UMI
+#### 2) FastqQC (PE + UMI)
 - Trims on quality and adaptors
 - Determines library strandedness
 - <b>Moves UMIs</b> to read headers
@@ -29,6 +29,7 @@
 	- FastQC
 	- seqtk
 	- AWS CLI (optional)
+- <b>Downstream:</b> Proceed to my [RNA-Seq analysis](https://github.com/The1stMartian/Nextflow-RNA-Seq) pipelines
 
 ## Processing Steps - <i>FastQC-PE</i>:
 1. <b>Fastq statistics</b> - seqkit stats is used to collect basic metrics about the fastq files including the number of sequences, minimum and maximum sequence lengths, average length, sum of lengths, and the format and type of sequences in the file. 
@@ -45,7 +46,7 @@ Process: "INTEGRITY_STATS".<br>
 3. <b>QC (pre-cleaning)</b> - FastQC is used to collect metrics on per-base quality scores. 
 4. <b>UMI Extraction</b> - UMI-tools moves UMIs to read headers 
 5. <b>Fastq cleaning</b> - fastp is used to trim on adaptors and quality. 
-6. <b>rRNA Read Removal</b> - SortMeRNA removes rRNA reads (user adjusts the target sequence)
+6. <b>rRNA Read Removal</b> - SortMeRNA removes rRNA reads (users can adjusts the rRNA sequence to eukaryotic or prokaryotic sequences)
 7. <b>QC (post-cleaning)</b> - FastQC is used again
 
 
