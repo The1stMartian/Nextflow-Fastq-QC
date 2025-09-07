@@ -91,6 +91,7 @@ process SUBSAMPLE_AND_INFER_STRAND {
   path "${sample}.lib_format_counts.json", emit: LIB_COUNTS
   path "${sample}.meta_info.json",        emit: META
   path "${sample}.salmon_infer.tsv",      emit: SUMMARY, optional: true
+  dir("quant")
 
   /*
     Unnecessarily complicated tunable parameters:

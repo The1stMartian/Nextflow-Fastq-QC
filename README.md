@@ -1,5 +1,5 @@
 ![Banner](./pix/banner.jpg)
-# Nextflow Fastq Quality Control Pipelines
+# Nextflow Fastq Pre-Processing Pipelines
 <i> Fastq metrics and trimming for paired-end reads</i>
 
 ## Available Pipelines: (2)
@@ -49,6 +49,21 @@ Process: "INTEGRITY_STATS".<br>
 6. <b>rRNA Read Removal</b> - SortMeRNA removes rRNA reads (users can adjusts the rRNA sequence to eukaryotic or prokaryotic sequences)
 7. <b>QC (post-cleaning)</b> - FastQC is used again
 
+# Understanding Strandedness
+- Salmon detects the library type and outputs a analysis that can be hard to understand - read the <b>/strandedness/meta_info.json</b> for the detected library type information. <br>
+- The libary types are described using the following terms. e.g "IU" would be paired-end unstranded.
+- All combinations are listed in the output file with the number of reads fitting the description beside it. Typically, one code will predominate, allowing users to make an informed decision about the library type. This information can be fed into downstream mapping pipelines.
+
+|Layout Term|Meaning|
+|:-----|:----|
+|S|single-end| 
+|I|paired-end inward (typical)|
+|O|paired-end outward (atypical)|
+|M|paired-end matching|
+|U|unstranded|
+|S |stranded|
+|F|Forward|
+|R|Reverse|
 
 ## Quality Metrics
 - seqkit outputs general statistics
@@ -63,12 +78,14 @@ Process: "INTEGRITY_STATS".<br>
 - FastQC per-base PHRED scores (pre-cleaning)
 ![fastqc phred pre](./pix/quality.png)
 
-# Notes:
-- My dockerfile for container cbreuer/fastq_quality_control is included if needed.
 
 # Background work:
+- My dockerfile for container cbreuer/fastq_quality_control is included if needed.- My dockerfile for container cbreuer/fastq_quality_control is included if needed.<br>
+
 Create a sortmerna index:
 - Open rrna-db-defaults.txt and [download](https://www.arb-silva.de/download/arb-files/) the silva database containing the rRNA sequences appropriate for your library. Keeping the number of sequences to a minimum is advised because the processing time of sortmerna can be high. Combine the desired sequences into a single .fa (your 'ribo_fasta.fa' sequence) file and run a one sortmerna example analysis with dummy fastq files. This will cause sortmerna to create the index in the work folder/idx. It's the /idx folder you want to keep and reuse. Point the nextflow paramter.
 - Save the .fa file with the rRNA sequences used to make the sortmerna library. Point the nextflow paramter at the file.<br>
+<br>
 Create a salmon index:
-- A tutorial is [here](https://combine-lab.github.io/salmon/getting_started/#indexing-txome)). Briefly: use "salmon index -t genome.fa.gz -i salmon_gnm_name" and point the nextflow parameter to the index folder.
+- A tutorial is [here](https://combine-lab.github.io/salmon/getting_started/#indexing-txome)). 
+- Briefly: use "salmon index -t genome.fa.gz -i salmon_gnm_name" and point the nextflow parameter to the index folder.
