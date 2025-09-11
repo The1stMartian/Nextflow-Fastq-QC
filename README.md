@@ -1,4 +1,4 @@
-![Banner](./pix/banner.jpg)
+![Banner](./media/banner.jpg)
 # Nextflow Fastq Pre-Processing Pipelines
 <i> Fastq metrics and trimming for paired-end reads</i>
 
@@ -28,6 +28,8 @@
 	- fastp
 	- FastQC
 	- seqtk
+	- salmon
+	- SortMeRNA
 	- AWS CLI (optional)
 - <b>Downstream:</b> Proceed to my [RNA-Seq analysis](https://github.com/The1stMartian/Nextflow-RNA-Seq) pipelines
 
@@ -54,29 +56,41 @@ Process: "INTEGRITY_STATS".<br>
 - The libary types are described using the following terms. e.g "IU" would be paired-end unstranded.
 - All combinations are listed in the output file with the number of reads fitting the description beside it. Typically, one code will predominate, allowing users to make an informed decision about the library type. This information can be fed into downstream mapping pipelines.
 
-|Layout Term|Meaning|
+|Letter 1|Meaning|
 |:-----|:----|
 |S|single-end| 
 |I|paired-end inward (typical)|
 |O|paired-end outward (atypical)|
 |M|paired-end matching|
+
+|Letter 2|Meaning|
+|:-----|:----|
 |U|unstranded|
 |S |stranded|
+
+|Letter 3|Meaning|
 |F|Forward|
 |R|Reverse|
 
+|Library Example|Expected Code|Meanings|
+|:-----|:----|:----|
+|Illumina TruSeq Stranded mRNA / dUTP kits |ISR|Paired-end inward, stranded, read1 maps to the template (rev) strand|
+|NEBNext Ultra Directional kits |ISF|Paired-end, stranded, read1 maps to the coding (for) strand|
+|Old unstranded kits|IU||
+
+
 ## Quality Metrics
-- seqkit outputs general statistics
- ![seqkit](./pix/stats.jpg)
+- seqkit outputs general statistics<br>
+ ![seqkit](./media/stats.jpg)<br>
 
- - fastp trimming results
- ![fastqp](./pix/fastp.jpg)
+ - fastp trimming results<br>
+ ![fastqp](./media/fastp.jpg)<br>
 
- - fastp fragment length analysis
- ![fastp fragment analysis](./pix/fastpFrag.jpg)
+ - fastp fragment length analysis<br>
+ ![fastp fragment analysis](./media/fastpFrag.jpg)<br>
 
-- FastQC per-base PHRED scores (pre-cleaning)
-![fastqc phred pre](./pix/quality.png)
+- FastQC per-base PHRED scores (pre-cleaning)<br>
+![fastqc phred pre](./media/quality.png)<br>
 
 
 # Background work:
