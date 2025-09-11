@@ -62,21 +62,25 @@ Process: "INTEGRITY_STATS".<br>
 |I|paired-end inward (typical)|
 |O|paired-end outward (atypical)|
 |M|paired-end matching|
+<br>
 
 |Letter 2|Meaning|
 |:-----|:----|
 |U|unstranded|
 |S |stranded|
+<br>
 
 |Letter 3|Meaning|
+|:-----|:----|
 |F|Forward|
 |R|Reverse|
+<br>
 
-|Library Example|Expected Code|Meanings|
+|Library Example|Code|Meanings|
 |:-----|:----|:----|
 |Illumina TruSeq Stranded mRNA / dUTP kits |ISR|Paired-end inward, stranded, read1 maps to the template (rev) strand|
 |NEBNext Ultra Directional kits |ISF|Paired-end, stranded, read1 maps to the coding (for) strand|
-|Old unstranded kits|IU||
+|Old unstranded kits|IU|Paired-end, unstranded|
 
 
 ## Quality Metrics
